@@ -152,7 +152,7 @@ var aba="t",filtro="Todos";
 var textoCarregado=false;
 
 // Carrega textos.json separadamente
-fetch(BASE+"textos_limpo.json")
+fetch("https://brenogaldino.github.io/reposiorio_PCMA/textos_limpo.json")
   .then(function(r){return r.json();})
   .then(function(data){
     textos=data;
