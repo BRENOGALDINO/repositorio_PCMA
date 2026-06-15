@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Repositório de Atos Normativos – PCMA</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+
+  /* CABEÇALHO */
+  header {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 60%, #22577a 100%);
+    padding: 32px 24px 0;
+    color: #fff;
+  }
+  .header-inner { max-width: 900px; margin: 0 auto; }
+  .header-top {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 8px;
+  }
+  .header-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: rgba(255,255,255,0.13);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; flex-shrink: 0;
+  }
+  .header-sub {
+    font-size: 0.68rem; letter-spacing: 0.14em; font-weight: 700;
+    color: #7dd3fc; text-transform: uppercase; margin-bottom: 3px;
+  }
+  h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.01em; }
+
+  /* BUSCA */
+  .search-wrap { position: relative; margin: 22px 0 0; }
+  .search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 1.1rem; pointer-events: none;
+  }
+  #busca {
+    width: 100%; padding: 14px 14px 14px 46px;
+    border-radius: 10px 10px 0 0; border: none;
+    font-size: 0.95rem; background: #fff; color: #111;
+    outline: none; box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+  }
+
+  /* ABAS */
+  .abas { display: flex; gap: 0; margin-top: 10px; }
+  .aba {
+    padding: 10px 22px; background: transparent;
+    color: rgba(255,255,255,0.6); border: none;
+    border-radius: 8px 8px 0 0; font-weight: 500;
+    font-size: 0.85rem; cursor: pointer; transition: all 0.15s;
+  }
+  .aba.ativa { background: #f0f2f5; color: #1b3a5c; font-weight: 700; }
+
+  /* CORPO */
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; }
+
+  /* FILTROS */
+  .filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .filtro-btn {
+    padding: 6px 15px; border-radius: 99px;
+    border: 1.5px solid #d1d5db; background: #fff;
+    color: #374151; font-size: 0.78rem; font-weight: 500;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .filtro-btn.ativo {
+    background: #1b3a5c; color: #fff; border-color: #1b3a5c; font-weight: 700;
+  }
+
+  /* SEÇÃO TEMA */
+  .secao { margin-bottom: 30px; }
+  .secao-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0; cursor: pointer; background: none; border: none;
+    width: 100%; text-align: left;
+  }
+  .secao-icone { font-size: 1.25rem; }
+  .secao-titulo { font-weight: 700; font-size: 1rem; color: #1b3a5c; }
+  .secao-count {
+    background: #e5e7eb; color: #374151;
+    border-radius: 99px; font-size: 0.72rem;
+    font-weight: 700; padding: 2px 10px;
+  }
+  .secao-toggle { margin-left: auto; color: #9ca3af; font-size: 0.8rem; }
+  .secao-linha { height: 1px; background: #d1d5db; margin-bottom: 14px; }
+  .secao-docs { display: flex; flex-direction: column; gap: 10px; }
+  .secao-docs.fechado { display: none; }
+
+  /* CARD */
+  .card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #1b3a5c;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 7px;
+    transition: box-shadow 0.15s;
+  }
+  .card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.10); }
+  .card-topo {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 10px;
+  }
+  .card-titulo {
+    font-weight: 600; font-size: 0.9rem;
+    color: #111827; line-height: 1.4;
+  }
+  .card-meta { display: flex; gap: 7px; align-items: center; flex-shrink: 0; }
+  .badge {
+    font-size: 0.66rem; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px;
+    color: #fff; text-transform: uppercase;
+    letter-spacing: 0.04em; white-space: nowrap;
+  }
+  .ano { font-size: 0.74rem; color: #9ca3af; font-weight: 500; }
+  .card-desc { font-size: 0.81rem; color: #6b7280; line-height: 1.5; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    background: #f3f4f6; color: #374151;
+    font-size: 0.68rem; padding: 2px 8px; border-radius: 99px;
+  }
+  .card-rodape { display: flex; justify-content: flex-end; margin-top: 4px; }
+  .btn-abrir {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #1b3a5c; color: #fff;
+    border: none; border-radius: 6px;
+    padding: 7px 14px; font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-abrir:hover { background: #22577a; }
+
+  /* RESULTADO BUSCA */
+  .resultado-info {
+    font-size: 0.84rem; color: #6b7280; margin-bottom: 16px;
+  }
+  mark { background: #fef08a; border-radius: 2px; padding: 0 1px; }
+
+  /* VAZIO */
+  .vazio { text-align: center; color: #9ca3af; margin-top: 56px; font-size: 0.95rem; }
+
+  footer {
+    text-align: center; padding: 20px;
+    font-size: 0.7rem; color: #9ca3af;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-top">
+      <div class="header-icon">🏛️</div>
+      <div>
+        <div class="header-sub">Polícia Civil do Maranhão</div>
+        <h1>Repositório de Atos Normativos</h1>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="busca" type="text" placeholder="Pesquise por assunto, tipo de ato, palavras-chave..." oninput="onBusca()" />
+    </div>
+    <div class="abas">
+      <button class="aba ativa" id="aba-temas" onclick="setAba('temas')">Por Tema</button>
+      <button class="aba" id="aba-busca" onclick="setAba('busca')">Resultado da Busca</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="filtros" id="filtros"></div>
+  <div id="conteudo"></div>
+</main>
+
+<footer>PCMA · Repositório Interno de Atos Normativos · 2025</footer>
+
+<script>
+const BASE = "https://raw.githubusercontent.com/BRENOGALDINO/reposiorio_PCMA/main/";
+
+const TIPO_COR = {
+  "Decreto":              "#7c2d12",
+  "Instrução Normativa":  "#1e40af",
+  "Portaria":             "#065f46",
+  "Resolução":            "#581c87",
+  "Lei":                  "#92400e",
+  "Manual":               "#0f766e",
+  "Material de Estudo":   "#374151",
+  "Coletânea":            "#1d4ed8",
+  "Nota Técnica":         "#be185d",
+  "Cartilha":             "#b45309",
+};
+
+const TEMA_ICONE = {
+  "Estrutura Organizacional": "🏢",
+  "Administração":            "📋",
+  "Gestão de Pessoal":        "👥",
+  "Plantões e Escalas":       "🕐",
+  "Investigação Criminal":    "🔍",
+  "Perícia e Forense":        "🔬",
+  "Processo Administrativo Disciplinar": "⚖️",
+  "Legislação":               "📜",
+  "Segurança Pública":        "🛡️",
+  "Comunicação Institucional":"📢",
+  "Armamento":                "🔒",
+  "Tecnologia da Informação": "💻",
+  "Material de Referência":   "📚",
+};
+
+const DOCS = [
+  // ── DECRETOS ──────────────────────────────────────────────────────────────
+  { titulo:"Decreto nº 16.969/1999 – Regimento GESEP", tipo:"Decreto", tema:"Estrutura Organizacional", ano:1999, desc:"Aprova o regimento interno do GESEP.", tags:["gesep","regimento","estrutura"], arquivo:"DECRETO Nº 16.969 DE 1999 - Regimento_GESEP.pdf" },
+  { titulo:"Decreto nº 18.214/2001 – Áreas Integradas de Segurança", tipo:"Decreto", tema:"Segurança Pública", ano:2001, desc:"Cria as áreas integradas de segurança pública no Maranhão.", tags:["áreas integradas","segurança pública"], arquivo:"DECRETO Nº 18.214 DE 2001. Criação das áreas integradas de segurança, pag 01 e 02.pdf" },
+  { titulo:"Decreto nº 20.531/2004 – Regulamentação DPCA", tipo:"Decreto", tema:"Estrutura Organizacional", ano:2004, desc:"Regulamenta o funcionamento da Delegacia de Proteção à Criança e ao Adolescente.", tags:["dpca","criança","adolescente","delegacia"], arquivo:"DECRETO Nº 20.531 DE 2004 – REGULAMENTAÇÃO DPCA, PAG. 05 A 07.pdf" },
+  { titulo:"Decreto nº 22.925/2007 – Estrutura Organizacional da PCMA", tipo:"Decreto", tema:"Estrutura Organizacional", ano:2007, desc:"Define a estrutura organizacional da Polícia Civil do Maranhão.", tags:["estrutura","organograma","pcma"], arquivo:"DECRETO Nº 22.925 DE 2007 – estrutura organizacional da PCMA - Pag. 1 a 6.pdf" },
+  { titulo:"Decreto nº 22.985/2007 – Concessão de Diárias", tipo:"Decreto", tema:"Administração", ano:2007, desc:"Regulamenta a concessão de diárias para servidores.", tags:["diárias","viagem","servidor"], arquivo:"DECRETO Nº 22.985 DE 2007 – Concessão de Diárias – PAG 1 a 2.pdf" },
+  { titulo:"Decreto nº 24.364/2008 – Regulamentação de Viagens", tipo:"Decreto", tema:"Administração", ano:2008, desc:"Regulamenta procedimentos para viagens a serviço.", tags:["viagens","diárias","deslocamento"], arquivo:"DECRETO Nº 24.364 DE 2008 – Regulamentação de viagens – PAG 1.pdf" },
+  { titulo:"Decreto nº 28.862/2013 – Diárias", tipo:"Decreto", tema:"Administração", ano:2013, desc:"Atualiza normas sobre concessão de diárias.", tags:["diárias","servidor","pagamento"], arquivo:"DECRETO Nº 28.862 DE 2013 – Diárias – PAG 21.pdf" },
+  { titulo:"Decreto nº 31.401/2015 – Locais Insalubres", tipo:"Decreto", tema:"Gestão de Pessoal", ano:2015, desc:"Define locais considerados insalubres para fins de adicional.", tags:["insalubridade","adicional","saúde"], arquivo:"DECRETO Nº 31.401 DE 2015 – Locais insalubres – PAG 06.pdf" },
+  { titulo:"Decreto nº 31.593/2016 – Redefinição das Circunscrições", tipo:"Decreto", tema:"Estrutura Organizacional", ano:2016, desc:"Redefine as circunscrições policiais do estado.", tags:["circunscrições","delegacias","território"], arquivo:"DECRETO Nº 31.593 DE 2016 – Redefinição das Circunscrições – PAG 01 a 08.pdf" },
+  { titulo:"Decreto nº 31.797/2016 – Padronização de Dados Estatísticos", tipo:"Decreto", tema:"Administração", ano:2016, desc:"Padroniza a apuração de dados estatísticos da segurança pública.", tags:["estatística","dados","padronização"], arquivo:"DECRETO Nº 31.797 DE 2016. – padroniza a apuração de dados estatísticos. pag. 05 a 06.pdf" },
+  { titulo:"Decreto nº 32.201/2016 – Designação de Policiais Aposentados", tipo:"Decreto", tema:"Gestão de Pessoal", ano:2016, desc:"Regulamenta a designação de policiais civis aposentados.", tags:["aposentado","designação","policial"], arquivo:"DECRETO Nº 32.201 DE 2016 – designação de policiais civis aposentados. pag. 11 a 12.pdf" },
+  { titulo:"Decreto nº 33.871/2018 – Competência DEM", tipo:"Decreto", tema:"Estrutura Organizacional", ano:2018, desc:"Define as competências da DEM – Delegacia Especializada de Meio Ambiente ou similar.", tags:["dem","competência","delegacia"], arquivo:"DECRETO Nº 33.871 DE 2018 – competência DEM – PAG 1.pdf" },
+
+  // ── INSTRUÇÕES NORMATIVAS ─────────────────────────────────────────────────
+  { titulo:"IN 01/2002 – Normatiza Plantão Central", tipo:"Instrução Normativa", tema:"Plantões e Escalas", ano:2002, desc:"Estabelece normas para o funcionamento do plantão central.", tags:["plantão","central","escala"], arquivo:"IN 01 2002 Normatiza Plantão Central – Pag 11 a 19.pdf" },
+  { titulo:"IN 02/2003 – Requisição do MP e Vestuário", tipo:"Instrução Normativa", tema:"Administração", ano:2003, desc:"Regulamenta requisições do Ministério Público e uso de vestuário.", tags:["ministério público","vestuário","requisição"], arquivo:"IN 02 2003 REQUISIÇÃ DO MP, VESTUÁRIO – Pag 19.pdf" },
+  { titulo:"IN 03/2003 – Normas Operacionais", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2003, desc:"Define normas operacionais para a atividade policial.", tags:["operacional","normas","investigação"], arquivo:"IN 03 2003 NORMAS OPERACIONAIS – Pag 05 a 16.pdf" },
+  { titulo:"IN 01/2007 – Normatiza Plantões", tipo:"Instrução Normativa", tema:"Plantões e Escalas", ano:2007, desc:"Atualiza as normas sobre plantões policiais.", tags:["plantão","escala","serviço"], arquivo:"IN 01 2007 NORMATIZA PLANTÕES – Pag 20 a 24.pdf" },
+  { titulo:"IN 02/2007 – Atribuição DRF", tipo:"Instrução Normativa", tema:"Estrutura Organizacional", ano:2007, desc:"Define as atribuições da Delegacia de Repressão a Furtos e Roubos.", tags:["drf","furto","roubo","atribuição"], arquivo:"IN 02 2007 ATRIBUIÇÃO DRF – Pag 32 a 33.pdf" },
+  { titulo:"IN 02/2009 – Plantões", tipo:"Instrução Normativa", tema:"Plantões e Escalas", ano:2009, desc:"Regulamenta plantões policiais e sobreaviso.", tags:["plantão","sobreaviso","escala"], arquivo:"IN 02 2009 PLANTÕES pg 47 e 48.pdf" },
+  { titulo:"IN 01/2010 – Exames Periciais", tipo:"Instrução Normativa", tema:"Perícia e Forense", ano:2010, desc:"Normatiza a realização de exames periciais.", tags:["perícia","exame","laudo"], arquivo:"IN 01 2010 EXAMES PERICIAIS pgs 34 e 35.pdf" },
+  { titulo:"IN 01/2011 – Mandado de Prisão por Pensão Alimentícia", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2011, desc:"Regulamenta o cumprimento de mandado de prisão por débito alimentar.", tags:["prisão","pensão alimentícia","mandado"], arquivo:"IN 01 2011 MANDADO DE PRISÃO POR PENSÃO ALIMENTÍCIA – Pag 09.pdf" },
+  { titulo:"IN 03/2011 – Registro de Ocorrência", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2011, desc:"Normatiza o registro de ocorrências policiais.", tags:["boletim","ocorrência","registro","bo"], arquivo:"IN 03 2011 REGISTRO DE OCORRENCIA pgs 23 e 24.pdf" },
+  { titulo:"IN 02/2012 – Normatização de Procedimentos Policiais", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2012, desc:"Normatiza procedimentos policiais de investigação e administração.", tags:["procedimento","investigação","norma"], arquivo:"IN 02 2012 NORMATIZAÇÃO DE PROCEDIMENTOS PGS 13 a 24.pdf" },
+  { titulo:"IN 06/2012 – Concessão de Armas e Extravio", tipo:"Instrução Normativa", tema:"Armamento", ano:2012, desc:"Regulamenta a concessão de armas e procedimentos em caso de extravio.", tags:["arma","extravio","concessão","armamento"], arquivo:"IN 06 2012 CONCESSÃO DE ARMAS E EXTRAVIO PGS 05 a 06.pdf" },
+  { titulo:"IN 08/2012 – Investigação de Homicídio", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2012, desc:"Estabelece procedimentos para investigação de crimes de homicídio.", tags:["homicídio","investigação","dhpp","morte"], arquivo:"IN 08 2012 INVESTIGAÇÃO DE HOMICIDIO PGS 40 a 42.pdf" },
+  { titulo:"IN 03/2013 – Atribuições da DRF", tipo:"Instrução Normativa", tema:"Estrutura Organizacional", ano:2013, desc:"Atualiza as atribuições da Delegacia de Repressão a Furtos.", tags:["drf","furto","atribuição"], arquivo:"IN 03 2013 ATRIBUIÇÕES DA DRF PGS 14 a 15.pdf" },
+  { titulo:"IN 02/2014 – Atribuições da Defraudações", tipo:"Instrução Normativa", tema:"Estrutura Organizacional", ano:2014, desc:"Define as atribuições da Delegacia de Defraudações.", tags:["defraudações","fraude","estelionato"], arquivo:"IN 02 2014 ATRIBUIÇÕES DA DEFRAUDAÇÕES PGS 21.pdf" },
+  { titulo:"IN 03/2014 – Encaminhamento de Arma das Forças Policiais", tipo:"Instrução Normativa", tema:"Armamento", ano:2014, desc:"Regulamenta o encaminhamento de armas apreendidas das forças policiais.", tags:["arma","apreensão","força policial"], arquivo:"IN 03 2014 ENCAMINHAMENTO DE ARMA DAS FORÇAS POLICIAIS PGS 71.pdf" },
+  { titulo:"IN 04/2014 – Plantões e Plantões Extraordinários", tipo:"Instrução Normativa", tema:"Plantões e Escalas", ano:2014, desc:"Normatiza plantões ordinários e extraordinários.", tags:["plantão","extraordinário","escala"], arquivo:"IN 04 2014 PLANTÕES e PLANTÕES EXTRAORDINÁRIOS PGS 12 a 16.pdf" },
+  { titulo:"IN 01/2015 – Normatiza Circunscrições", tipo:"Instrução Normativa", tema:"Estrutura Organizacional", ano:2015, desc:"Normatiza as circunscrições policiais.", tags:["circunscrição","delegacia","território"], arquivo:"IN 01 2015 NORMATIZA CIRCUNSCRIÇÕES PGS 69 a 78.pdf" },
+  { titulo:"IN 03/2015 – Audiência de Custódia", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2015, desc:"Regulamenta os procedimentos para audiência de custódia.", tags:["custódia","audiência","preso","apresentação"], arquivo:"IN 03 2015 AUDIÊNCIA DE CUSTÓDIA PGS 52 a 53.pdf" },
+  { titulo:"IN 04/2015 – Atribuições SECCOR", tipo:"Instrução Normativa", tema:"Estrutura Organizacional", ano:2015, desc:"Define as atribuições da SECCOR.", tags:["seccor","atribuição","corregedoria"], arquivo:"IN 04 2015 ATRIBUIÇÕES SECCOR PGS 45 e 46.pdf" },
+  { titulo:"IN 04/2015 – Atribuições SENARC", tipo:"Instrução Normativa", tema:"Estrutura Organizacional", ano:2015, desc:"Define as atribuições da SENARC.", tags:["senarc","atribuição","narcóticos","drogas"], arquivo:"IN 04 2015 ATRIBUIÇÕES SENARC PGS 45.pdf" },
+  { titulo:"IN 06/2015 – Atribuições SHPP", tipo:"Instrução Normativa", tema:"Estrutura Organizacional", ano:2015, desc:"Define as atribuições da SHPP – Seção de Homicídios.", tags:["shpp","homicídio","atribuição"], arquivo:"IN 06 2015 ATRIBUIÇÕES SHPP PGS 29 e 30.pdf" },
+  { titulo:"IN 004/2015 – SENARC", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2015, desc:"Instrução normativa da SENARC sobre narcóticos.", tags:["senarc","narcóticos","drogas","entorpecentes"], arquivo:"IN 004-2015 SENARC.pdf" },
+  { titulo:"IN 01/2018 – Plantão da Mulher", tipo:"Instrução Normativa", tema:"Plantões e Escalas", ano:2018, desc:"Regulamenta o funcionamento do plantão especializado no atendimento à mulher.", tags:["mulher","violência doméstica","plantão","feminino"], arquivo:"IN 01 2018 PLANTÃO DA MULHER PGS 25 a 26.pdf" },
+  { titulo:"IN nº 002/2018", tipo:"Instrução Normativa", tema:"Administração", ano:2018, desc:"Instrução normativa de junho de 2018 sobre procedimentos administrativos.", tags:["procedimento","administrativo","norma"], arquivo:"IN Nº 002-2018 DE 28 DE JUNHO DE 2018.pdf" },
+  { titulo:"IN 08/2017 – VPI", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2017, desc:"Normatiza a Verificação de Procedência de Informações (VPI).", tags:["vpi","verificação","informação","investigação"], arquivo:"IN 08 2017 VPI PGS 95 a 97.pdf" },
+  { titulo:"IN 04/2021 – Uso do Certificado Digital", tipo:"Instrução Normativa", tema:"Tecnologia da Informação", ano:2021, desc:"Regulamenta o uso de certificado digital pelos servidores da PCMA.", tags:["certificado digital","assinatura","tecnologia","ti"], arquivo:"IN 04 2021 - uso do certificado digital.pdf" },
+  { titulo:"IN nº 002/2012 – Normatiza Procedimentos Policiais", tipo:"Instrução Normativa", tema:"Investigação Criminal", ano:2012, desc:"Normatiza procedimentos policiais operacionais.", tags:["procedimento","operacional","policial"], arquivo:"IN Nº 002-2012 NORMATIZA PROCEDIMENTOS POLICIAIS.pdf" },
+
+  // ── PORTARIAS ─────────────────────────────────────────────────────────────
+  { titulo:"Portaria 01/2010 – Uso de Viaturas", tipo:"Portaria", tema:"Administração", ano:2010, desc:"Regulamenta o uso de viaturas policiais.", tags:["viatura","veículo","frota","uso"], arquivo:"PORTARIA 01 2010 REGULAMENTA USO DE VIATURAS PGS 12.pdf" },
+  { titulo:"Portaria 01/2012 – Proíbe Porte de Arma em Processo e Sindicância", tipo:"Portaria", tema:"Armamento", ano:2012, desc:"Proíbe o porte de arma por servidor submetido a processo disciplinar ou sindicância.", tags:["arma","porte","processo","sindicância"], arquivo:"PORTARIA 01 2012 PROIBE PORTE DE ARMA EM PROCESSO E SINDICÂNCIA PGS 09.pdf" },
+  { titulo:"Portaria 02/2004 – Proíbe Porte de Arma em Processo e Sindicância", tipo:"Portaria", tema:"Armamento", ano:2004, desc:"Proíbe o porte de arma por servidor em processo ou sindicância (versão 2004).", tags:["arma","porte","processo","sindicância"], arquivo:"PORTARIA 02 2004 PROIBE PORTE DE ARMA EM PROCESSO E SINDICÂNCIA PGS 131.pdf" },
+  { titulo:"Portaria 01/2016 – Bloqueio de Veículo", tipo:"Portaria", tema:"Investigação Criminal", ano:2016, desc:"Regulamenta o bloqueio de veículos pela Polícia Civil.", tags:["veículo","bloqueio","restrição","roubo"], arquivo:"PORTARIA 01 2016 BLOQUEIO DE VEÍCULO PGS 22.pdf" },
+  { titulo:"Portaria 10/2017 – Supervisão de Estágio Probatório", tipo:"Portaria", tema:"Gestão de Pessoal", ano:2017, desc:"Define critérios para supervisão do estágio probatório.", tags:["estágio probatório","avaliação","servidor","concurso"], arquivo:"PORTARIA 10 2017 SUPERVISÃO ESTÁGIO PROBATÓRIO PGS 12 a 14.pdf" },
+  { titulo:"Portaria 12/2012 – Atribuições SAISP", tipo:"Portaria", tema:"Estrutura Organizacional", ano:2012, desc:"Define as atribuições da SAISP.", tags:["saisp","atribuição","inteligência"], arquivo:"PORTARIA 12 2012 ATRIBUIÇÕES SAISP PGS 12 a 13.pdf" },
+  { titulo:"Portaria 29/2012 – Policiais Presos DECOP", tipo:"Portaria", tema:"Gestão de Pessoal", ano:2012, desc:"Regulamenta procedimentos relativos a policiais civis presos.", tags:["policial preso","decop","custódia","servidor"], arquivo:"PORTARIA 29 2012 POLICIAIS PRESOS DECOP PGS 69.pdf" },
+  { titulo:"Portaria 29/2017 – Recebimento de Carro Roubado", tipo:"Portaria", tema:"Investigação Criminal", ano:2017, desc:"Estabelece procedimentos para recebimento de veículos recuperados.", tags:["veículo","roubo","recuperado","carro"], arquivo:"PORTARIA 29 2017 RECEBIMENTO DE CARRO ROUBADO PGS 41.pdf" },
+  { titulo:"Portaria 36/2017 – Mutirão", tipo:"Portaria", tema:"Administração", ano:2017, desc:"Regulamenta operações de mutirão policial.", tags:["mutirão","operação","força tarefa"], arquivo:"PORTARIA 36 2017 MUTIRÃO PGS 29.pdf" },
+
+  // ── RESOLUÇÕES ────────────────────────────────────────────────────────────
+  { titulo:"Resolução nº 001/2021-CPC – Mídias Sociais", tipo:"Resolução", tema:"Comunicação Institucional", ano:2021, desc:"Regulamenta o uso de mídias e redes sociais pelos servidores da PCMA.", tags:["mídia social","rede social","instagram","facebook","comunicação"], arquivo:"RESOLUÇÃO Nº 001.2021-CPC - MÍDIA SOCIAL. REDE SOCIAL.pdf" },
+  { titulo:"Resolução 001/2018-CPC-MA – Identidade Visual", tipo:"Resolução", tema:"Comunicação Institucional", ano:2018, desc:"Institui a identidade visual padronizada da Polícia Civil do Maranhão.", tags:["identidade visual","padronização","logo","marca"], arquivo:"Resolução 001-2018-CPC-MA - Institui a identidade visual da Polícia Civil. (padronização).pdf" },
+  { titulo:"Resolução nº 002/2012 – Conselho de Polícia Civil", tipo:"Resolução", tema:"Estrutura Organizacional", ano:2012, desc:"Resolução do Conselho de Polícia Civil do Maranhão.", tags:["conselho","cpc","resolução","governança"], arquivo:"Resolução nº 002-2012-Conselho de Polícia Civil.pdf" },
+
+  // ── LEIS ─────────────────────────────────────────────────────────────────
+  { titulo:"Lei nº 8.508/2006 – Estatuto da Polícia Civil", tipo:"Lei", tema:"Legislação", ano:2006, desc:"Estatuto da Polícia Civil do Estado do Maranhão.", tags:["estatuto","policial civil","carreira","lei"], arquivo:"LEI-8.508-2006_Estatuto da PC.pdf" },
+  { titulo:"Lei nº 10.499/2016 – Designação de Policial Aposentado", tipo:"Lei", tema:"Legislação", ano:2016, desc:"Dispõe sobre a designação de policial civil aposentado.", tags:["aposentado","designação","policial","lei"], arquivo:"Lei 10.499 de 2016 - Designação de policial civil aposentado. pag. 4 e 5.pdf" },
+  { titulo:"Lei nº 10.578/2017 – Departamento de Feminicídio", tipo:"Lei", tema:"Legislação", ano:2017, desc:"Cria o departamento especializado em crimes de feminicídio.", tags:["feminicídio","mulher","departamento","violência"], arquivo:"Lei 10.578 2017 Cria departamento de feminicídio. pag. 02.pdf" },
+
+  // ── MANUAIS ───────────────────────────────────────────────────────────────
+  { titulo:"Manual do Participante – Curso de PAD 2020", tipo:"Manual", tema:"Processo Administrativo Disciplinar", ano:2020, desc:"Material de apoio ao curso de Processo Administrativo Disciplinar.", tags:["pad","curso","sindicância","processo","disciplinar"], arquivo:"Manual do Participante - Curso de PAD 2020.pdf" },
+  { titulo:"Manual de Legislação CGU", tipo:"Manual", tema:"Processo Administrativo Disciplinar", ano:2020, desc:"Manual da CGU sobre legislação aplicada ao processo disciplinar.", tags:["cgu","legislação","disciplinar","controle"], arquivo:"Manual_Legislacao_CGU.pdf" },
+  { titulo:"Manual de PAD 2021", tipo:"Manual", tema:"Processo Administrativo Disciplinar", ano:2021, desc:"Manual atualizado sobre Processo Administrativo Disciplinar.", tags:["pad","processo","disciplinar","cgu","servidor"], arquivo:"Manual_PAD_2021_1.pdf" },
+  { titulo:"Manual de Estatais 2020", tipo:"Manual", tema:"Material de Referência", ano:2020, desc:"Manual sobre legislação e gestão de empresas estatais.", tags:["estatais","empresa pública","gestão","cgu"], arquivo:"Manual_de_Estatais_2020.pdf" },
+
+  // ── MATERIAL DE ESTUDO ────────────────────────────────────────────────────
+  { titulo:"Dosimetria de Sanções Administrativas Disciplinares – CGU", tipo:"Material de Estudo", tema:"Processo Administrativo Disciplinar", ano:2020, desc:"Guia da CGU sobre dosimetria e aplicação de sanções em processos disciplinares.", tags:["dosimetria","sanção","disciplinar","cgu","penalidade"], arquivo:"Dosimetria_Sancoes_Adm_Disciplinares_CGU.pdf" },
+  { titulo:"Ética Viva – Correição", tipo:"Material de Estudo", tema:"Processo Administrativo Disciplinar", ano:2020, desc:"Material sobre ética no serviço público e atividade correicional.", tags:["ética","correição","conduta","servidor"], arquivo:"Etica_Viva_Correicao.pdf" },
+  { titulo:"Anotações sobre PAD 2020", tipo:"Material de Estudo", tema:"Processo Administrativo Disciplinar", ano:2020, desc:"Anotações e resumos sobre Processo Administrativo Disciplinar.", tags:["pad","resumo","anotações","disciplinar"], arquivo:"anotacoes-sobre-pad_2020.pdf" },
+  { titulo:"Fundamentos do Direito Administrativo Disciplinar – 2020", tipo:"Material de Estudo", tema:"Processo Administrativo Disciplinar", ano:2020, desc:"Sumário e referências sobre fundamentos do direito administrativo disciplinar.", tags:["direito","administrativo","disciplinar","fundamentos"], arquivo:"fundamentos_de_direito_administrativo_disciplinar_12-2020_sumario.pdf" },
+  { titulo:"Finalidade da Pena", tipo:"Material de Estudo", tema:"Material de Referência", ano:2020, desc:"Texto sobre teorias e finalidade da pena no direito.", tags:["pena","finalidade","teoria","direito penal"], arquivo:"finalidade_da_pena.pdf" },
+  { titulo:"Nota Técnica nº 779/2020", tipo:"Nota Técnica", tema:"Administração", ano:2020, desc:"Nota técnica sobre matéria administrativa.", tags:["nota técnica","administração","orientação"], arquivo:"Nota_Tecnica_779_2020.pdf" },
+  { titulo:"Cartilha do Servidor", tipo:"Cartilha", tema:"Gestão de Pessoal", ano:2021, desc:"Cartilha orientativa para servidores públicos.", tags:["servidor","cartilha","orientação","direitos","deveres"], arquivo:"cartilha_servidor_compressed.pdf" },
+
+  // ── COLETÂNEA ─────────────────────────────────────────────────────────────
+  { titulo:"Coletânea de Normas Aplicáveis à Polícia Civil-MA", tipo:"Coletânea", tema:"Legislação", ano:2023, desc:"Compilação de normas legais e regulamentares aplicáveis à PCMA.", tags:["coletânea","normas","legislação","pcma","compilação"], arquivo:"Coletânea de normas aplicáveis à Polícia Civil-MA.doc" },
+];
+
+// ── LÓGICA ────────────────────────────────────────────────────────────────────
+let abaAtual = "temas";
+let tipoFiltro = "Todos";
+
+const tipos = ["Todos", ...new Set(DOCS.map(d => d.tipo))];
+
+function urlArquivo(nome) {
+  return BASE + encodeURIComponent(nome);
+}
+
+function highlight(texto, termo) {
+  if (!termo) return texto;
+  const re = new RegExp(`(${termo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, "gi");
+  return texto.replace(re, "<mark>$1</mark>");
+}
+
+function renderFiltros() {
+  const el = document.getElementById("filtros");
+  el.innerHTML = tipos.map(t =>
+    `<button class="filtro-btn${tipoFiltro===t?' ativo':''}" onclick="setFiltro('${t}')">${t}</button>`
+  ).join("");
+}
+
+function setFiltro(t) {
+  tipoFiltro = t;
+  renderFiltros();
+  render();
+}
+
+function setAba(a) {
+  abaAtual = a;
+  document.getElementById("aba-temas").className = "aba" + (a==="temas"?" ativa":"");
+  document.getElementById("aba-busca").className = "aba" + (a==="busca"?" ativa":"");
+  render();
+}
+
+function onBusca() {
+  const v = document.getElementById("busca").value.trim();
+  if (v) setAba("busca"); else setAba("temas");
+  render();
+}
+
+function docsFiltrados() {
+  const termo = document.getElementById("busca").value.trim().toLowerCase();
+  return DOCS.filter(d => {
+    if (tipoFiltro !== "Todos" && d.tipo !== tipoFiltro) return false;
+    if (!termo) return true;
+    return (
+      d.titulo.toLowerCase().includes(termo) ||
+      d.desc.toLowerCase().includes(termo) ||
+      d.tema.toLowerCase().includes(termo) ||
+      d.tipo.toLowerCase().includes(termo) ||
+      d.tags.some(t => t.toLowerCase().includes(termo)) ||
+      String(d.ano).includes(termo)
+    );
+  });
+}
+
+function cardHTML(d, termo) {
+  const cor = TIPO_COR[d.tipo] || "#374151";
+  return `
+  <div class="card" style="border-left-color:${cor}">
+    <div class="card-topo">
+      <span class="card-titulo">${highlight(d.titulo, termo)}</span>
+      <div class="card-meta">
+        <span class="badge" style="background:${cor}">${d.tipo}</span>
+        <span class="ano">${d.ano}</span>
+      </div>
+    </div>
+    <p class="card-desc">${highlight(d.desc, termo)}</p>
+    <div class="card-tags">${d.tags.map(t=>`<span class="tag">#${t}</span>`).join("")}</div>
+    <div class="card-rodape">
+      <a class="btn-abrir" href="${urlArquivo(d.arquivo)}" target="_blank">📄 Abrir documento</a>
+    </div>
+  </div>`;
+}
+
+function render() {
+  const termo = document.getElementById("busca").value.trim().toLowerCase();
+  const docs = docsFiltrados();
+  const el = document.getElementById("conteudo");
+
+  // Atualiza label da aba de busca
+  document.getElementById("aba-busca").textContent =
+    `Resultado da Busca${termo ? ` (${docs.length})` : ""}`;
+
+  if (abaAtual === "temas" && !termo) {
+    // Agrupa por tema
+    const mapa = {};
+    docs.forEach(d => { if(!mapa[d.tema]) mapa[d.tema]=[]; mapa[d.tema].push(d); });
+    if (Object.keys(mapa).length === 0) {
+      el.innerHTML = `<p class="vazio">Nenhum documento encontrado.</p>`;
+      return;
+    }
+    el.innerHTML = Object.entries(mapa).map(([tema, tDocs]) => `
+      <div class="secao">
+        <button class="secao-header" onclick="toggleSecao(this)">
+          <span class="secao-icone">${TEMA_ICONE[tema]||"📄"}</span>
+          <span class="secao-titulo">${tema}</span>
+          <span class="secao-count">${tDocs.length}</span>
+          <span class="secao-toggle">▲</span>
+        </button>
+        <div class="secao-linha"></div>
+        <div class="secao-docs">${tDocs.map(d=>cardHTML(d,"")).join("")}</div>
+      </div>`).join("");
+  } else {
+    if (docs.length === 0) {
+      el.innerHTML = `<p class="vazio">Nenhum resultado encontrado para "<strong>${termo}</strong>".</p>`;
+      return;
+    }
+    el.innerHTML = `
+      <p class="resultado-info">${docs.length} documento${docs.length>1?"s":""} encontrado${docs.length>1?"s":""} para "<strong>${termo||"todos"}</strong>"</p>
+      ${docs.map(d=>cardHTML(d,termo)).join("")}`;
+  }
+}
+
+function toggleSecao(btn) {
+  const docs = btn.parentElement.querySelector(".secao-docs");
+  const tog = btn.querySelector(".secao-toggle");
+  const fechado = docs.classList.toggle("fechado");
+  tog.textContent = fechado ? "▼" : "▲";
+}
+
+// INIT
+renderFiltros();
+render();
+</script>
+</body>
+</html>
