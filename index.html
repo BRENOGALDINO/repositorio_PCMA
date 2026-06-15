@@ -3,78 +3,381 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Repositorio de Atos Normativos - PCMA</title>
+<title>Base Normativa · PCMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
 <style>
+:root {
+  --preto: #0a0a0f;
+  --preto-card: #13131a;
+  --dourado: #c8a84b;
+  --dourado-claro: #e2c97e;
+  --dourado-escuro: #8a6f28;
+  --azul-ma: #003087;
+  --vermelho-ma: #c8102e;
+  --branco: #f5f3ee;
+  --cinza: #2a2a35;
+  --cinza-borda: #2e2e3a;
+  --cinza-texto: #8a8a9a;
+  --texto: #e8e6e0;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;min-height:100vh}
-header{background:linear-gradient(135deg,#0d1b2a,#1b3a5c,#22577a);padding:32px 24px 0;color:#fff}
-.hi{max-width:900px;margin:0 auto}
-.ht{display:flex;align-items:center;gap:16px;margin-bottom:8px}
-.hic{width:52px;height:52px;border-radius:12px;background:rgba(255,255,255,0.13);display:flex;align-items:center;justify-content:center;font-size:1.7rem}
-.hs{font-size:0.68rem;letter-spacing:0.14em;font-weight:700;color:#7dd3fc;text-transform:uppercase;margin-bottom:3px}
-h1{font-size:1.3rem;font-weight:700}
-.sw{position:relative;margin:22px 0 0}
-.si{position:absolute;left:14px;top:50%;transform:translateY(-50%)}
-#busca{width:100%;padding:14px 14px 14px 44px;border-radius:10px 10px 0 0;border:none;font-size:0.95rem;outline:none}
-.abas{display:flex;margin-top:10px}
-.aba{padding:10px 22px;background:transparent;color:rgba(255,255,255,0.6);border:none;border-radius:8px 8px 0 0;font-size:0.85rem;cursor:pointer}
-.aba.ativa{background:#f0f2f5;color:#1b3a5c;font-weight:700}
-main{max-width:900px;margin:0 auto;padding:24px 16px 48px}
-.filtros{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.fb{padding:6px 15px;border-radius:99px;border:1.5px solid #d1d5db;background:#fff;color:#374151;font-size:0.78rem;cursor:pointer}
-.fb.ativo{background:#1b3a5c;color:#fff;border-color:#1b3a5c;font-weight:700}
-.secao{margin-bottom:30px}
-.sh{display:flex;align-items:center;gap:10px;padding:8px 0;cursor:pointer;background:none;border:none;width:100%;text-align:left}
-.st{font-weight:700;font-size:1rem;color:#1b3a5c}
-.sc{background:#e5e7eb;color:#374151;border-radius:99px;font-size:0.72rem;font-weight:700;padding:2px 10px}
-.stg{margin-left:auto;color:#9ca3af}
-.sl{height:1px;background:#d1d5db;margin-bottom:14px}
-.sd{display:flex;flex-direction:column;gap:10px}
-.sd.fechado{display:none}
-.card{background:#fff;border:1px solid #e5e7eb;border-left:4px solid #1b3a5c;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:7px;transition:box-shadow 0.15s}
-.card:hover{box-shadow:0 4px 18px rgba(0,0,0,.10)}
-.ct{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.ctit{font-weight:600;font-size:0.9rem;color:#111827;line-height:1.4}
-.cm{display:flex;gap:7px;align-items:center;flex-shrink:0}
-.badge{font-size:0.66rem;font-weight:700;padding:2px 8px;border-radius:4px;color:#fff;text-transform:uppercase;letter-spacing:0.04em;white-space:nowrap}
-.ano{font-size:0.74rem;color:#9ca3af}
-.trecho{font-size:0.78rem;color:#6b7280;line-height:1.5;font-style:italic;background:#f9fafb;padding:6px 10px;border-radius:4px;border-left:3px solid #d1d5db}
-mark{background:#fef08a;border-radius:2px;padding:0 1px}
-.cr{display:flex;justify-content:flex-end;margin-top:4px}
-.btn{display:inline-flex;align-items:center;gap:6px;background:#1b3a5c;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:0.78rem;font-weight:600;text-decoration:none}
-.btn:hover{background:#22577a}
-.ri{font-size:0.84rem;color:#6b7280;margin-bottom:16px}
-.vazio{text-align:center;color:#9ca3af;margin-top:56px}
-.carregando{text-align:center;color:#6b7280;margin-top:40px;font-size:0.9rem}
-footer{text-align:center;padding:20px;font-size:0.7rem;color:#9ca3af}
+body{font-family:'Inter',sans-serif;background:var(--preto);color:var(--texto);min-height:100vh}
+
+/* HEADER */
+header {
+  background: linear-gradient(180deg, #000000 0%, #0d0d14 100%);
+  border-bottom: 1px solid var(--cinza-borda);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.6);
+}
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px 24px 0;
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+.brasao {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(200,168,75,0.4));
+  flex-shrink: 0;
+}
+.header-texto {}
+.header-eyebrow {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--dourado);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.header-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--branco);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.header-linha-dourada {
+  height: 1px;
+  background: linear-gradient(90deg, var(--dourado) 0%, transparent 60%);
+  margin-bottom: 16px;
+}
+
+/* BUSCA */
+.busca-wrap {
+  position: relative;
+  margin-bottom: 0;
+}
+.busca-icone {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dourado);
+  font-size: 1rem;
+  pointer-events: none;
+}
+#busca {
+  width: 100%;
+  padding: 14px 16px 14px 46px;
+  background: var(--cinza);
+  border: 1px solid var(--cinza-borda);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  color: var(--branco);
+  font-size: 0.92rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+#busca::placeholder { color: var(--cinza-texto); }
+#busca:focus { border-color: var(--dourado-escuro); }
+
+/* ABAS */
+.abas {
+  display: flex;
+  gap: 2px;
+  margin-top: 8px;
+}
+.aba {
+  padding: 9px 20px;
+  background: transparent;
+  color: var(--cinza-texto);
+  border: none;
+  border-radius: 6px 6px 0 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.02em;
+  transition: all 0.15s;
+}
+.aba.ativa {
+  background: var(--preto);
+  color: var(--dourado);
+  font-weight: 700;
+  border-top: 2px solid var(--dourado);
+}
+
+/* MAIN */
+main { max-width: 960px; margin: 0 auto; padding: 28px 24px 60px; }
+
+/* FILTROS */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.fb {
+  padding: 5px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--cinza-borda);
+  background: transparent;
+  color: var(--cinza-texto);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.15s;
+}
+.fb:hover { border-color: var(--dourado-escuro); color: var(--dourado-claro); }
+.fb.ativo {
+  background: var(--dourado);
+  color: var(--preto);
+  border-color: var(--dourado);
+  font-weight: 700;
+}
+
+/* SECOES */
+.secao { margin-bottom: 32px; }
+.sh {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+.sh-icone { font-size: 1.1rem; }
+.sh-titulo { font-weight: 700; font-size: 0.92rem; color: var(--dourado-claro); letter-spacing: 0.04em; text-transform: uppercase; }
+.sh-count {
+  background: var(--cinza);
+  color: var(--cinza-texto);
+  border-radius: 99px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 9px;
+  border: 1px solid var(--cinza-borda);
+}
+.sh-toggle { margin-left: auto; color: var(--cinza-texto); font-size: 0.75rem; }
+.sh-linha {
+  height: 1px;
+  background: linear-gradient(90deg, var(--dourado-escuro) 0%, var(--cinza-borda) 30%, transparent 100%);
+  margin-bottom: 14px;
+}
+.sd { display: flex; flex-direction: column; gap: 10px; }
+.sd.fechado { display: none; }
+
+/* CARDS */
+.card {
+  background: var(--preto-card);
+  border: 1px solid var(--cinza-borda);
+  border-left: 3px solid var(--dourado-escuro);
+  border-radius: 8px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  cursor: default;
+}
+.card:hover {
+  border-color: var(--dourado);
+  box-shadow: 0 4px 24px rgba(200,168,75,0.12);
+}
+.card-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.card-titulo {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--branco);
+  line-height: 1.45;
+}
+.card-meta { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.ano { font-size: 0.72rem; color: var(--cinza-texto); font-weight: 500; }
+.trecho {
+  font-size: 0.77rem;
+  color: var(--cinza-texto);
+  line-height: 1.6;
+  font-style: italic;
+  background: rgba(255,255,255,0.03);
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-left: 2px solid var(--dourado-escuro);
+}
+mark {
+  background: rgba(200,168,75,0.25);
+  color: var(--dourado-claro);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+.card-rodape { display: flex; justify-content: flex-end; margin-top: 4px; }
+.btn-abrir {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  color: var(--dourado);
+  border: 1px solid var(--dourado-escuro);
+  border-radius: 5px;
+  padding: 7px 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.btn-abrir:hover {
+  background: var(--dourado);
+  color: var(--preto);
+  border-color: var(--dourado);
+}
+
+/* RESULTADO */
+.ri { font-size: 0.82rem; color: var(--cinza-texto); margin-bottom: 20px; }
+.ri strong { color: var(--dourado-claro); }
+.vazio { text-align: center; color: var(--cinza-texto); margin-top: 60px; font-size: 0.9rem; }
+.carregando { text-align: center; color: var(--cinza-texto); margin-top: 48px; font-size: 0.85rem; }
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.68rem;
+  color: var(--cinza-texto);
+  border-top: 1px solid var(--cinza-borda);
+  letter-spacing: 0.05em;
+}
+footer span { color: var(--dourado-escuro); }
+
+/* BANDEIRA MA — detalhe sutil no header */
+.ma-stripe {
+  height: 3px;
+  background: linear-gradient(90deg, var(--azul-ma) 0%, var(--azul-ma) 33%, #fff 33%, #fff 66%, var(--vermelho-ma) 66%);
+  opacity: 0.35;
+}
+
+@media (max-width: 600px) {
+  .header-titulo { font-size: 1.1rem; }
+  .brasao { width: 44px; height: 44px; }
+  main { padding: 20px 16px 48px; }
+}
 </style>
 </head>
 <body>
+
+<div class="ma-stripe"></div>
+
 <header>
-<div class="hi">
-  <div class="ht">
-    <div class="hic">&#127963;</div>
-    <div><div class="hs">Policia Civil do Maranhao</div><h1>Repositorio de Atos Normativos</h1></div>
+  <div class="header-inner">
+    <div class="header-top">
+      <img class="brasao" src="https://raw.githubusercontent.com/BRENOGALDINO/reposiorio_PCMA/main/brasao_pcma.png" alt="Brasão PCMA" onerror="this.style.display='none'"/>
+      <div class="header-texto">
+        <div class="header-eyebrow">Polícia Civil do Maranhão</div>
+        <div class="header-titulo">Base Normativa · PCMA</div>
+      </div>
+    </div>
+    <div class="header-linha-dourada"></div>
+    <div class="busca-wrap">
+      <span class="busca-icone">⌕</span>
+      <input id="busca" type="text" placeholder="Pesquise qualquer palavra em todos os documentos..." oninput="onB()"/>
+    </div>
+    <div class="abas">
+      <button class="aba ativa" id="at" onclick="setA('t')">Por Tema</button>
+      <button class="aba" id="ab" onclick="setA('b')">Resultados da Busca</button>
+    </div>
   </div>
-  <div class="sw">
-    <span class="si">&#128269;</span>
-    <input id="busca" type="text" placeholder="Pesquise por qualquer palavra do conteudo dos documentos..." oninput="onB()"/>
-  </div>
-  <div class="abas">
-    <button class="aba ativa" id="at" onclick="setA('t')">Por Tema</button>
-    <button class="aba" id="ab" onclick="setA('b')">Resultado da Busca</button>
-  </div>
-</div>
 </header>
+
 <main>
-<div class="filtros" id="filtros"></div>
-<div id="conteudo"><p class="carregando">Carregando documentos...</p></div>
+  <div class="filtros" id="filtros"></div>
+  <div id="conteudo"><p class="carregando">Carregando acervo...</p></div>
 </main>
-<footer>PCMA - Repositorio Interno de Atos Normativos - 2025</footer>
+
+<footer>
+  <span>PCMA</span> · Base Normativa Interna · Uso restrito · 2025
+</footer>
+
 <script>
 var BASE="https://raw.githubusercontent.com/BRENOGALDINO/reposiorio_PCMA/main/";
-var COR={"Decreto":"#7c2d12","Instrucao Normativa":"#1e40af","Portaria":"#065f46","Resolucao":"#581c87","Lei":"#92400e","Manual":"#0f766e","Material de Estudo":"#374151","Coletanea":"#1d4ed8","Nota Tecnica":"#be185d","Cartilha":"#b45309"};
-var ICO={"Estrutura Organizacional":"&#127970;","Administracao":"&#128203;","Gestao de Pessoal":"&#128101;","Plantoes e Escalas":"&#128336;","Investigacao Criminal":"&#128269;","Pericia e Forense":"&#128300;","Processo Administrativo Disciplinar":"&#9878;","Legislacao":"&#128220;","Seguranca Publica":"&#128737;","Comunicacao Institucional":"&#128226;","Armamento":"&#128274;","Tecnologia da Informacao":"&#128187;","Material de Referencia":"&#128218;"};
+var COR={
+  "Decreto":"#7c2d12",
+  "Instrucao Normativa":"#1e3a5f",
+  "Portaria":"#1a4731",
+  "Resolucao":"#3b1f6e",
+  "Lei":"#8a6f28",
+  "Manual":"#1a4040",
+  "Material de Estudo":"#2a2a35",
+  "Coletanea":"#1a3a6e",
+  "Nota Tecnica":"#6e1a3a",
+  "Cartilha":"#5a3010"
+};
+var COR_TEXTO={
+  "Decreto":"#fca07a",
+  "Instrucao Normativa":"#7dd3fc",
+  "Portaria":"#6ee7b7",
+  "Resolucao":"#c4b5fd",
+  "Lei":"#e2c97e",
+  "Manual":"#5eead4",
+  "Material de Estudo":"#9ca3af",
+  "Coletanea":"#93c5fd",
+  "Nota Tecnica":"#f9a8d4",
+  "Cartilha":"#fdba74"
+};
+var ICO={
+  "Estrutura Organizacional":"🏢",
+  "Administracao":"📋",
+  "Gestao de Pessoal":"👥",
+  "Plantoes e Escalas":"🕐",
+  "Investigacao Criminal":"🔍",
+  "Pericia e Forense":"🔬",
+  "Processo Administrativo Disciplinar":"⚖️",
+  "Legislacao":"📜",
+  "Seguranca Publica":"🛡️",
+  "Comunicacao Institucional":"📢",
+  "Armamento":"🔒",
+  "Tecnologia da Informacao":"💻",
+  "Material de Referencia":"📚"
+};
 var DOCS=[
 {t:"Decreto n 16.969/1999 - Regimento GESEP",tp:"Decreto",tm:"Estrutura Organizacional",a:1999,f:"DECRETO N%C2%BA 16.969 DE 1999 - Regimento_GESEP.pdf"},
 {t:"Decreto n 18.214/2001 - Areas Integradas de Seguranca",tp:"Decreto",tm:"Seguranca Publica",a:2001,f:"DECRETO N%C2%BA 18.214 DE 2001.%20Cria%C3%A7%C3%A3o%20das%20%C3%A1reas%20integradas%20de%20seguran%C3%A7a%2C%20pag%2001%20e%2002.pdf"},
@@ -148,21 +451,12 @@ var DOCS=[
 var textos={};
 var tipos=["Todos"];
 DOCS.forEach(function(d){if(tipos.indexOf(d.tp)<0)tipos.push(d.tp);});
-var aba="t",filtro="Todos";
-var textoCarregado=false;
+var aba="t",filtro="Todos",textoCarregado=false;
 
-// Carrega textos.json separadamente
 fetch("https://brenogaldino.github.io/reposiorio_PCMA/textos_limpo.json")
   .then(function(r){return r.json();})
-  .then(function(data){
-    textos=data;
-    textoCarregado=true;
-    render();
-  })
-  .catch(function(){
-    textoCarregado=true;
-    render();
-  });
+  .then(function(data){textos=data;textoCarregado=true;render();})
+  .catch(function(){textoCarregado=true;render();});
 
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 function hlText(txt,q){
@@ -173,52 +467,67 @@ function hlText(txt,q){
 }
 function trechoTexto(txt,q){
   if(!txt||!q)return "";
-  var tl=txt.toLowerCase(),ql=q.toLowerCase();
-  var i=tl.indexOf(ql);
+  var tl=txt.toLowerCase(),ql=q.toLowerCase(),i=tl.indexOf(ql);
   if(i<0)return "";
-  var a=Math.max(0,i-80),b=Math.min(txt.length,i+q.length+80);
-  var trecho=(a>0?"...":"")+txt.slice(a,b)+(b<txt.length?"...":"");
-  return hlText(trecho,q);
+  var a=Math.max(0,i-90),b=Math.min(txt.length,i+q.length+90);
+  return hlText((a>0?"...":"")+txt.slice(a,b)+(b<txt.length?"...":""),q);
 }
-function nomeArquivo(f){return decodeURIComponent(f);}
 function getFiltrados(){
   var q=document.getElementById("busca").value.trim().toLowerCase();
   return DOCS.filter(function(d){
     if(filtro!=="Todos"&&d.tp!==filtro)return false;
     if(!q)return true;
-    var txtDoc=textos[nomeArquivo(d.f)]||"";
-    return d.t.toLowerCase().indexOf(q)>=0||d.tm.toLowerCase().indexOf(q)>=0||d.tp.toLowerCase().indexOf(q)>=0||String(d.a).indexOf(q)>=0||txtDoc.toLowerCase().indexOf(q)>=0;
+    var txt=textos[decodeURIComponent(d.f)]||"";
+    return d.t.toLowerCase().indexOf(q)>=0||d.tm.toLowerCase().indexOf(q)>=0||d.tp.toLowerCase().indexOf(q)>=0||String(d.a).indexOf(q)>=0||txt.indexOf(q)>=0;
   });
 }
 function card(d,q){
-  var cor=COR[d.tp]||"#374151";
-  var txtDoc=textos[nomeArquivo(d.f)]||"";
-  var tr=trechoTexto(txtDoc,q);
-  return '<div class="card" style="border-left-color:'+cor+'"><div class="ct"><span class="ctit">'+hlText(d.t,q)+'</span><div class="cm"><span class="badge" style="background:'+cor+'">'+esc(d.tp)+'</span><span class="ano">'+d.a+'</span></div></div>'+(tr?'<div class="trecho">'+tr+'</div>':"")+'<div class="cr"><a class="btn" href="'+BASE+d.f+'" target="_blank">&#128196; Abrir documento</a></div></div>';
+  var cor=COR[d.tp]||"#2a2a35";
+  var ct=COR_TEXTO[d.tp]||"#9ca3af";
+  var txt=textos[decodeURIComponent(d.f)]||"";
+  var tr=trechoTexto(txt,q);
+  return '<div class="card"><div class="card-topo"><span class="card-titulo">'+hlText(d.t,q)+'</span><div class="card-meta"><span class="badge" style="background:'+cor+';color:'+ct+'">'+esc(d.tp)+'</span><span class="ano">'+d.a+'</span></div></div>'+(tr?'<div class="trecho">'+tr+'</div>':"")+'<div class="card-rodape"><a class="btn-abrir" href="'+BASE+d.f+'" target="_blank">&#128196; Abrir documento</a></div></div>';
 }
 function rFiltros(){
-  document.getElementById("filtros").innerHTML=tipos.map(function(t){return'<button class="fb'+(filtro===t?" ativo":"")+'" onclick="setF(\''+t+'\')">'+esc(t)+"</button>";}).join("");
+  document.getElementById("filtros").innerHTML=tipos.map(function(t){
+    return'<button class="fb'+(filtro===t?" ativo":"")+'" onclick="setF(\''+t+'\')">'+esc(t)+"</button>";
+  }).join("");
 }
 function setF(t){filtro=t;rFiltros();render();}
-function setA(a){aba=a;document.getElementById("at").className="aba"+(a==="t"?" ativa":"");document.getElementById("ab").className="aba"+(a==="b"?" ativa":"");render();}
-function onB(){var v=document.getElementById("busca").value.trim();if(v)setA("b");else setA("t");render();}
+function setA(a){
+  aba=a;
+  document.getElementById("at").className="aba"+(a==="t"?" ativa":"");
+  document.getElementById("ab").className="aba"+(a==="b"?" ativa":"");
+  render();
+}
+function onB(){
+  var v=document.getElementById("busca").value.trim();
+  if(v)setA("b");else setA("t");
+  render();
+}
 function render(){
-  if(!textoCarregado){document.getElementById("conteudo").innerHTML='<p class="carregando">Carregando...</p>';return;}
+  if(!textoCarregado){document.getElementById("conteudo").innerHTML='<p class="carregando">Carregando acervo...</p>';return;}
   var q=document.getElementById("busca").value.trim();
   var ds=getFiltrados();
   var el=document.getElementById("conteudo");
-  document.getElementById("ab").textContent="Resultado da Busca"+(q?" ("+ds.length+")":"");
+  document.getElementById("ab").textContent="Resultados da Busca"+(q?" ("+ds.length+")":"");
   if(aba==="t"&&!q){
     var m={};ds.forEach(function(d){if(!m[d.tm])m[d.tm]=[];m[d.tm].push(d);});
     var temas=Object.keys(m);
-    if(!temas.length){el.innerHTML='<p class="vazio">Nenhum documento.</p>';return;}
-    el.innerHTML=temas.map(function(tm){return'<div class="secao"><button class="sh" onclick="tog(this)"><span>'+(ICO[tm]||"&#128196;")+'</span><span class="st">'+esc(tm)+'</span><span class="sc">'+m[tm].length+'</span><span class="stg">&#9650;</span></button><div class="sl"></div><div class="sd">'+m[tm].map(function(d){return card(d,"");}).join("")+"</div></div>";}).join("");
-  }else{
+    if(!temas.length){el.innerHTML='<p class="vazio">Nenhum documento encontrado.</p>';return;}
+    el.innerHTML=temas.map(function(tm){
+      return'<div class="secao"><button class="sh" onclick="tog(this)"><span class="sh-icone">'+(ICO[tm]||"📄")+'</span><span class="sh-titulo">'+esc(tm)+'</span><span class="sh-count">'+m[tm].length+'</span><span class="sh-toggle">▲</span></button><div class="sh-linha"></div><div class="sd">'+m[tm].map(function(d){return card(d,"");}).join("")+"</div></div>";
+    }).join("");
+  } else {
     if(!ds.length){el.innerHTML='<p class="vazio">Nenhum resultado para "'+esc(q)+'".</p>';return;}
-    el.innerHTML='<p class="ri">'+ds.length+' documento'+(ds.length>1?"s":"")+" encontrado"+(ds.length>1?"s":"")+" para \""+esc(q)+'"</p>'+ds.map(function(d){return card(d,q);}).join("");
+    el.innerHTML='<p class="ri">'+ds.length+' documento'+(ds.length>1?"s":"")+" encontrado"+(ds.length>1?"s":"")+" para <strong>"+esc(q)+"</strong></p>"+ds.map(function(d){return card(d,q);}).join("");
   }
 }
-function tog(btn){var sd=btn.parentElement.querySelector(".sd");sd.classList.toggle("fechado");btn.querySelector(".stg").innerHTML=sd.classList.contains("fechado")?"&#9660;":"&#9650;";}
+function tog(btn){
+  var sd=btn.parentElement.querySelector(".sd");
+  sd.classList.toggle("fechado");
+  btn.querySelector(".sh-toggle").textContent=sd.classList.contains("fechado")?"▼":"▲";
+}
 rFiltros();render();
 </script>
 </body>
